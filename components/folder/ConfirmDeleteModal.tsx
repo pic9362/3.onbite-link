@@ -3,13 +3,15 @@
 import { useEffect } from "react";
 
 type Props = {
-  folderName: string;
+  title: string;
+  message: string;
   onClose: () => void;
   onConfirm: () => void;
 };
 
-export default function DeleteFolderModal({
-  folderName,
+export default function ConfirmDeleteModal({
+  title,
+  message,
   onClose,
   onConfirm,
 }: Props) {
@@ -29,20 +31,19 @@ export default function DeleteFolderModal({
       <div
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="delete-folder-title"
+        aria-labelledby="confirm-delete-title"
         onClick={(e) => e.stopPropagation()}
         className="flex w-full max-w-[420px] flex-col gap-5 rounded-2xl bg-[var(--surface)] p-6 shadow-[var(--shadow-card-hover)]"
       >
         <div className="flex flex-col gap-2">
           <h2
-            id="delete-folder-title"
+            id="confirm-delete-title"
             className="text-xl font-bold leading-[1.4] text-[var(--text)]"
           >
-            폴더를 삭제할까요?
+            {title}
           </h2>
           <p className="text-[17px] text-[var(--text-sub)]">
-            &lsquo;{folderName}&rsquo; 폴더가 삭제됩니다. 이 작업은 되돌릴 수
-            없어요.
+            {message}
           </p>
         </div>
         <div className="flex gap-3">

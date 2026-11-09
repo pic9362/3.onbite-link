@@ -7,6 +7,7 @@ import type { LinkItem } from "@/lib/types";
 type LinksContextValue = {
   links: LinkItem[];
   addLink: (link: Omit<LinkItem, "id" | "createdAt">) => LinkItem;
+  deleteLink: (id: string) => void;
 };
 
 const LinksContext = createContext<LinksContextValue | null>(null);
@@ -30,8 +31,12 @@ export function LinksProvider({
     return link;
   }, []);
 
+  const deleteLink = useCallback((id: string) => {
+    setLinks((prev) => prev.filter((l) => l.id !== id));
+  }, []);
+
   return (
-    <LinksContext.Provider value={{ links, addLink }}>
+    <LinksContext.Provider value={{ links, addLink, deleteLink }}>
       {children}
     </LinksContext.Provider>
   );

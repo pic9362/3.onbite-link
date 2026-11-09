@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type { Folder } from "@/lib/types";
 import SidebarItem from "./SidebarItem";
 import NewFolderModal from "../folder/NewFolderModal";
-import DeleteFolderModal from "../folder/DeleteFolderModal";
+import ConfirmDeleteModal from "../folder/ConfirmDeleteModal";
 import { useFolders } from "../folder/FoldersProvider";
 
 type Props = {
@@ -56,8 +56,9 @@ export default function FolderList({ folders, activeId }: Props) {
         />
       )}
       {target && (
-        <DeleteFolderModal
-          folderName={target.name}
+        <ConfirmDeleteModal
+          title="폴더를 삭제할까요?"
+          message={`'${target.name}' 폴더가 삭제됩니다. 이 작업은 되돌릴 수 없어요.`}
           onClose={close}
           onConfirm={confirmDelete}
         />

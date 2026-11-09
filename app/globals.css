@@ -112,6 +112,22 @@ a {
   color: var(--error);
 }
 
+.card-action {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+.link-card:hover .card-action,
+.link-card:focus-within .card-action {
+  opacity: 1;
+  pointer-events: auto;
+}
+.card-action:hover {
+  color: var(--error);
+}
+
 .sidebar-item {
   transition:
     background-color 0.2s ease,
