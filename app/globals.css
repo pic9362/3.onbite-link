@@ -56,6 +56,25 @@ a {
   transform: scale(0.98);
 }
 
+.btn-secondary {
+  transition:
+    filter 0.2s ease,
+    transform 0.1s ease;
+}
+.btn-secondary:hover {
+  filter: brightness(0.96);
+}
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled:hover {
+  background: var(--disabled);
+}
+.btn-primary:disabled:active {
+  transform: none;
+}
+
 .sidebar-item {
   transition:
     background-color 0.2s ease,

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Header from "./Header";
 import MainSection from "./MainSection";
 import Sidebar from "../sidebar/Sidebar";
-import { folders, links } from "@/lib/mock-data";
+import { links } from "@/lib/mock-data";
 
 type Props = {
   children: ReactNode;
@@ -14,11 +14,7 @@ export default function AppShell({ children, activeId }: Props) {
     <div className="flex h-screen flex-col">
       <Header />
       <div className="flex min-h-0 flex-1">
-        <Sidebar
-          folders={folders}
-          totalCount={links.length}
-          activeId={activeId}
-        />
+        <Sidebar totalCount={links.length} activeId={activeId} />
         <MainSection>{children}</MainSection>
       </div>
     </div>

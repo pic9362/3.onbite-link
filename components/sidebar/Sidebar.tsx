@@ -1,18 +1,17 @@
-import type { Folder } from "@/lib/types";
+"use client";
+
 import SidebarItem from "./SidebarItem";
 import FolderList from "./FolderList";
+import { useFolders } from "../folder/FoldersProvider";
 
 type Props = {
-  folders: Folder[];
   totalCount: number;
   activeId?: string;
 };
 
-export default function Sidebar({
-  folders,
-  totalCount,
-  activeId = "all",
-}: Props) {
+export default function Sidebar({ totalCount, activeId = "all" }: Props) {
+  const { folders } = useFolders();
+
   return (
     <aside className="hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto px-4 pb-4 pt-9 md:flex">
       <SidebarItem
