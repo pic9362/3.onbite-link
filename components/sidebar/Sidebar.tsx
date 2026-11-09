@@ -14,7 +14,7 @@ export default function Sidebar({
   activeId = "all",
 }: Props) {
   return (
-    <aside className="hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto border-r border-zinc-200 p-4 dark:border-zinc-800 md:flex">
+    <aside className="hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto px-4 pb-4 pt-9 md:flex">
       <SidebarItem
         label="All"
         href="/"

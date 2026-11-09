@@ -15,13 +15,13 @@ export default function NewLinkForm({ folders }: { folders: Folder[] }) {
         e.preventDefault();
         // TODO: 저장 로직 연결
       }}
-      className="flex max-w-xl flex-col gap-5"
+      className="flex max-w-[640px] flex-col gap-5 rounded-2xl bg-[var(--surface)] p-5 shadow-[var(--shadow-card)]"
     >
       <LinkInput value={url} onChange={setUrl} />
       <FolderSelect folders={folders} value={folderId} onChange={setFolderId} />
       <button
         type="submit"
-        className="h-10 self-end rounded-lg bg-foreground px-6 text-sm font-medium text-background transition-opacity hover:opacity-80"
+        className="btn-primary rounded-xl bg-[var(--accent)] px-5 py-3.5 text-[17px] font-bold text-white"
       >
         저장
       </button>

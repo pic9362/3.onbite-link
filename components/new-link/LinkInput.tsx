@@ -5,8 +5,8 @@ type Props = {
 
 export default function LinkInput({ value, onChange }: Props) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor="url" className="text-sm font-medium">
+    <div className="flex flex-col gap-2">
+      <label htmlFor="url" className="text-sm font-bold text-[var(--text-sub)]">
         링크
       </label>
       <input
@@ -17,7 +17,7 @@ export default function LinkInput({ value, onChange }: Props) {
         placeholder="https://example.com"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-10 rounded-lg border border-zinc-300 bg-transparent px-3 text-sm outline-none focus:border-foreground dark:border-zinc-700"
+        className="field rounded-xl bg-[var(--bg)] px-4 py-3.5 text-[17px] text-[var(--text)] outline-none"
       />
     </div>
   );

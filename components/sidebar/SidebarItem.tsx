@@ -17,15 +17,15 @@ export default function SidebarItem({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
+      className={`sidebar-item flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-[15px] ${
         active
-          ? "bg-zinc-100 font-semibold dark:bg-zinc-800"
-          : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:bg-zinc-900"
+          ? "bg-[var(--accent-soft)] font-bold text-[var(--accent)]"
+          : "text-[var(--text-sub)]"
       }`}
     >
       <span>{label}</span>
       {count !== undefined && (
-        <span className="text-xs text-zinc-400">{count}</span>
+        <span className="text-sm text-[var(--text-sub)]">{count}</span>
       )}
     </Link>
   );

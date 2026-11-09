@@ -22,25 +22,25 @@ export default function LinkCard({ link, folderName }: Props) {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-zinc-200 transition-shadow hover:shadow-md dark:border-zinc-800"
+      className="card-hover flex h-full w-full flex-col overflow-hidden rounded-2xl bg-[var(--surface)]"
     >
       <div
-        className={`flex h-32 items-center justify-center bg-gradient-to-br ${gradient} text-3xl font-bold text-white/90`}
+        className={`flex h-32 items-center justify-center bg-gradient-to-br ${gradient} text-3xl font-bold text-white`}
         aria-hidden
       >
         {hostname.charAt(0).toUpperCase()}
       </div>
-      <div className="flex flex-1 flex-col gap-1.5 p-4">
-        <h3 className="line-clamp-1 font-semibold group-hover:underline">
+      <div className="flex flex-1 flex-col gap-1.5 p-5">
+        <h3 className="line-clamp-1 text-[17px] font-bold text-[var(--text)]">
           {link.title}
         </h3>
-        <p className="line-clamp-2 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="line-clamp-2 text-sm leading-snug text-[var(--text-sub)]">
           {link.description}
         </p>
-        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-zinc-400">
+        <div className="mt-auto flex items-center justify-between pt-3 text-sm text-[var(--text-sub)]">
           <span className="truncate">{hostname}</span>
           {folderName && (
-            <span className="ml-2 shrink-0 rounded bg-zinc-100 px-1.5 py-0.5 dark:bg-zinc-800">
+            <span className="ml-2 shrink-0 rounded-lg bg-[var(--accent-soft)] px-2.5 py-1 text-sm text-[var(--accent)]">
               {folderName}
             </span>
           )}
