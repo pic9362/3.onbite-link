@@ -7,6 +7,7 @@ type Props = {
   href: string;
   count?: number;
   active?: boolean;
+  onEdit?: () => void;
   onDelete?: () => void;
 };
 
@@ -15,6 +16,7 @@ export default function SidebarItem({
   href,
   count,
   active = false,
+  onEdit,
   onDelete,
 }: Props) {
   return (
@@ -35,12 +37,35 @@ export default function SidebarItem({
           </span>
         )}
       </Link>
+      {onEdit && (
+        <button
+          type="button"
+          onClick={onEdit}
+          aria-label={`${label} 폴더 이름 수정`}
+          className="row-action absolute right-10 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[var(--text-sub)]"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+          </svg>
+        </button>
+      )}
       {onDelete && (
         <button
           type="button"
           onClick={onDelete}
           aria-label={`${label} 폴더 삭제`}
-          className="delete-btn absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[var(--text-sub)]"
+          className="row-action row-action-danger absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[var(--text-sub)]"
         >
           <svg
             width="18"

@@ -7,6 +7,7 @@ import type { Folder } from "@/lib/types";
 type FoldersContextValue = {
   folders: Folder[];
   addFolder: (name: string) => void;
+  renameFolder: (id: string, name: string) => void;
   deleteFolder: (id: string) => void;
 };
 
@@ -32,8 +33,14 @@ export function FoldersProvider({
     setFolders((prev) => prev.filter((f) => f.id !== id));
   }, []);
 
+  const renameFolder = useCallback((id: string, name: string) => {
+    setFolders((prev) => prev.map((f) => (f.id === id ? { ...f, name } : f)));
+  }, []);
+
   return (
-    <FoldersContext.Provider value={{ folders, addFolder, deleteFolder }}>
+    <FoldersContext.Provider
+      value={{ folders, addFolder, renameFolder, deleteFolder }}
+    >
       {children}
     </FoldersContext.Provider>
   );

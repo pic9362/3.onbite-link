@@ -3,17 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
+  title?: string;
+  initialName?: string;
   onClose: () => void;
   onSave: (name: string) => void;
 };
 
-export default function NewFolderModal({ onClose, onSave }: Props) {
-  const [name, setName] = useState("");
+export default function NewFolderModal({
+  title = "새 폴더",
+  initialName = "",
+  onClose,
+  onSave,
+}: Props) {
+  const [name, setName] = useState(initialName);
   const inputRef = useRef<HTMLInputElement>(null);
   const trimmed = name.trim();
 
   useEffect(() => {
     inputRef.current?.focus();
+    inputRef.current?.select();
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -43,7 +51,7 @@ export default function NewFolderModal({ onClose, onSave }: Props) {
           id="new-folder-title"
           className="text-xl font-bold leading-[1.4] text-[var(--text)]"
         >
-          새 폴더
+          {title}
         </h2>
         <div className="flex flex-col gap-2">
           <label

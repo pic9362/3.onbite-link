@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Folder } from "@/lib/types";
 import SidebarItem from "./SidebarItem";
+import NewFolderModal from "../folder/NewFolderModal";
 import DeleteFolderModal from "../folder/DeleteFolderModal";
 import { useFolders } from "../folder/FoldersProvider";
 
@@ -14,9 +15,11 @@ type Props = {
 
 export default function FolderList({ folders, activeId }: Props) {
   const router = useRouter();
-  const { deleteFolder } = useFolders();
+  const { renameFolder, deleteFolder } = useFolders();
   const [target, setTarget] = useState<Folder | null>(null);
+  const [editTarget, setEditTarget] = useState<Folder | null>(null);
   const close = useCallback(() => setTarget(null), []);
+  const closeEdit = useCallback(() => setEditTarget(null), []);
 
   const confirmDelete = () => {
     if (!target) return;
@@ -38,11 +41,20 @@ export default function FolderList({ folders, activeId }: Props) {
               href={`/folder/${folder.id}`}
               count={folder.count}
               active={activeId === folder.id}
+              onEdit={() => setEditTarget(folder)}
               onDelete={() => setTarget(folder)}
             />
           </li>
         ))}
       </ul>
+      {editTarget && (
+        <NewFolderModal
+          title="폴더 이름 수정"
+          initialName={editTarget.name}
+          onClose={closeEdit}
+          onSave={(name) => renameFolder(editTarget.id, name)}
+        />
+      )}
       {target && (
         <DeleteFolderModal
           folderName={target.name}

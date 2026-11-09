@@ -87,7 +87,7 @@ a {
   transform: scale(0.98);
 }
 
-.delete-btn {
+.row-action {
   opacity: 0;
   pointer-events: none;
   transition:
@@ -95,8 +95,8 @@ a {
     background-color 0.2s ease,
     color 0.2s ease;
 }
-.sidebar-row:hover .delete-btn,
-.sidebar-row:focus-within .delete-btn {
+.sidebar-row:hover .row-action,
+.sidebar-row:focus-within .row-action {
   opacity: 1;
   pointer-events: auto;
 }
@@ -104,8 +104,11 @@ a {
 .sidebar-row:focus-within .sidebar-count {
   opacity: 0;
 }
-.delete-btn:hover {
+.row-action:hover {
   background: var(--bg);
+  color: var(--accent);
+}
+.row-action-danger:hover {
   color: var(--error);
 }
 
