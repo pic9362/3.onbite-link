@@ -3,6 +3,7 @@ import type { LinkItem } from "@/lib/types";
 type Props = {
   link: LinkItem;
   folderName?: string;
+  onEdit?: () => void;
   onDelete?: () => void;
 };
 
@@ -14,7 +15,12 @@ const gradients = [
   "from-amber-200 to-yellow-300",
 ];
 
-export default function LinkCard({ link, folderName, onDelete }: Props) {
+export default function LinkCard({
+  link,
+  folderName,
+  onEdit,
+  onDelete,
+}: Props) {
   const hostname = new URL(link.url).hostname.replace(/^www\./, "");
   const seed = [...link.id].reduce((sum, c) => sum + c.charCodeAt(0), 0);
   const gradient = gradients[seed % gradients.length];
@@ -61,6 +67,29 @@ export default function LinkCard({ link, folderName, onDelete }: Props) {
           </div>
         </div>
       </a>
+      {onEdit && (
+        <button
+          type="button"
+          onClick={onEdit}
+          aria-label={`${link.title} 링크 수정`}
+          className="card-action card-action-edit absolute right-14 top-3 flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--text-sub)] shadow-[var(--shadow-card)]"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+          </svg>
+        </button>
+      )}
       {onDelete && (
         <button
           type="button"
