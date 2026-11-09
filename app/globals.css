@@ -75,6 +75,40 @@ a {
   transform: none;
 }
 
+.btn-danger {
+  transition:
+    filter 0.2s ease,
+    transform 0.1s ease;
+}
+.btn-danger:hover {
+  filter: brightness(0.92);
+}
+.btn-danger:active {
+  transform: scale(0.98);
+}
+
+.delete-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.sidebar-row:hover .delete-btn,
+.sidebar-row:focus-within .delete-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar-row:hover .sidebar-count,
+.sidebar-row:focus-within .sidebar-count {
+  opacity: 0;
+}
+.delete-btn:hover {
+  background: var(--bg);
+  color: var(--error);
+}
+
 .sidebar-item {
   transition:
     background-color 0.2s ease,

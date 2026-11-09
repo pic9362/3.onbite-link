@@ -1,5 +1,11 @@
+"use client";
+
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { Folder } from "@/lib/types";
 import SidebarItem from "./SidebarItem";
+import DeleteFolderModal from "../folder/DeleteFolderModal";
+import { useFolders } from "../folder/FoldersProvider";
 
 type Props = {
   folders: Folder[];
@@ -7,9 +13,23 @@ type Props = {
 };
 
 export default function FolderList({ folders, activeId }: Props) {
+  const router = useRouter();
+  const { deleteFolder } = useFolders();
+  const [target, setTarget] = useState<Folder | null>(null);
+  const close = useCallback(() => setTarget(null), []);
+
+  const confirmDelete = () => {
+    if (!target) return;
+    deleteFolder(target.id);
+    if (activeId === target.id) router.push("/");
+    setTarget(null);
+  };
+
   return (
     <nav aria-label="폴더">
-      <h2 className="mb-2 px-3.5 text-sm font-bold text-[var(--text-sub)]">폴더</h2>
+      <h2 className="mb-2 px-3.5 text-sm font-bold text-[var(--text-sub)]">
+        폴더
+      </h2>
       <ul className="flex flex-col gap-0.5">
         {folders.map((folder) => (
           <li key={folder.id}>
@@ -18,10 +38,18 @@ export default function FolderList({ folders, activeId }: Props) {
               href={`/folder/${folder.id}`}
               count={folder.count}
               active={activeId === folder.id}
+              onDelete={() => setTarget(folder)}
             />
           </li>
         ))}
       </ul>
+      {target && (
+        <DeleteFolderModal
+          folderName={target.name}
+          onClose={close}
+          onConfirm={confirmDelete}
+        />
+      )}
     </nav>
   );
 }
