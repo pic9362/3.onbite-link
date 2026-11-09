@@ -15,7 +15,8 @@ const gradients = [
 
 export default function LinkCard({ link, folderName }: Props) {
   const hostname = new URL(link.url).hostname.replace(/^www\./, "");
-  const gradient = gradients[Number(link.id) % gradients.length];
+  const seed = [...link.id].reduce((sum, c) => sum + c.charCodeAt(0), 0);
+  const gradient = gradients[seed % gradients.length];
 
   return (
     <a
@@ -24,12 +25,23 @@ export default function LinkCard({ link, folderName }: Props) {
       rel="noopener noreferrer"
       className="card-hover flex h-full w-full flex-col overflow-hidden rounded-2xl bg-[var(--surface)]"
     >
-      <div
-        className={`flex h-32 items-center justify-center bg-gradient-to-br ${gradient} text-3xl font-bold text-white`}
-        aria-hidden
-      >
-        {hostname.charAt(0).toUpperCase()}
-      </div>
+      {link.thumbnail ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={link.thumbnail}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          className="h-32 w-full object-cover"
+        />
+      ) : (
+        <div
+          className={`flex h-32 items-center justify-center bg-gradient-to-br ${gradient} text-3xl font-bold text-white`}
+          aria-hidden
+        >
+          {hostname.charAt(0).toUpperCase()}
+        </div>
+      )}
       <div className="flex flex-1 flex-col gap-1.5 p-5">
         <h3 className="line-clamp-1 text-[17px] font-bold text-[var(--text)]">
           {link.title}

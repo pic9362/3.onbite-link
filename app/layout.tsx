@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { FoldersProvider } from "@/components/folder/FoldersProvider";
-import { folders } from "@/lib/mock-data";
+import { LinksProvider } from "@/components/link/LinksProvider";
+import { folders, links } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "한입 링크",
@@ -12,7 +13,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ko" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <FoldersProvider initialFolders={folders}>{children}</FoldersProvider>
+        <FoldersProvider initialFolders={folders}>
+          <LinksProvider initialLinks={links}>{children}</LinksProvider>
+        </FoldersProvider>
       </body>
     </html>
   );

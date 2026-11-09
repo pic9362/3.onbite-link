@@ -2,16 +2,12 @@
 
 import AppShell from "../layout/AppShell";
 import LinkGrid from "../link/LinkGrid";
+import { useLinks } from "../link/LinksProvider";
 import { useFolders } from "./FoldersProvider";
-import type { LinkItem } from "@/lib/types";
 
-type Props = {
-  folderId: string;
-  links: LinkItem[];
-};
-
-export default function FolderView({ folderId, links }: Props) {
+export default function FolderView({ folderId }: { folderId: string }) {
   const { folders } = useFolders();
+  const { links } = useLinks();
   const folder = folders.find((f) => f.id === folderId);
   const folderLinks = links.filter((link) => link.folderId === folderId);
 
