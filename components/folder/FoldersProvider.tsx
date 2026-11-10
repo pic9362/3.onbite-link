@@ -3,10 +3,11 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { Folder } from "@/lib/types";
+import { createClient } from "@/utils/supabase/client";
 
 type FoldersContextValue = {
   folders: Folder[];
-  addFolder: (name: string) => void;
+  addFolder: (name: string) => Promise<void>;
   renameFolder: (id: string, name: string) => void;
   deleteFolder: (id: string) => void;
 };
@@ -22,10 +23,16 @@ export function FoldersProvider({
 }) {
   const [folders, setFolders] = useState(initialFolders);
 
-  const addFolder = useCallback((name: string) => {
+  const addFolder = useCallback(async (name: string) => {
+    const { data, error } = await createClient()
+      .from("folder")
+      .insert({ name })
+      .select("id, name")
+      .single();
+    if (error) throw error;
     setFolders((prev) => [
       ...prev,
-      { id: `folder-${Date.now()}`, name, count: 0 },
+      { id: String(data.id), name: data.name, count: 0 },
     ]);
   }, []);
 

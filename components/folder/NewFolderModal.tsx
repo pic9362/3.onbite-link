@@ -6,7 +6,7 @@ type Props = {
   title?: string;
   initialName?: string;
   onClose: () => void;
-  onSave: (name: string) => void;
+  onSave: (name: string) => void | Promise<void>;
 };
 
 export default function NewFolderModal({
@@ -17,7 +17,22 @@ export default function NewFolderModal({
 }: Props) {
   const [name, setName] = useState(initialName);
   const inputRef = useRef<HTMLInputElement>(null);
+  const savingRef = useRef(false);
+  const [saving, setSaving] = useState(false);
   const trimmed = name.trim();
+
+  const handleSubmit = async () => {
+    if (!trimmed || savingRef.current) return;
+    savingRef.current = true;
+    setSaving(true);
+    try {
+      await onSave(trimmed);
+      onClose();
+    } catch {
+      savingRef.current = false;
+      setSaving(false);
+    }
+  };
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -41,9 +56,7 @@ export default function NewFolderModal({
         onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => {
           e.preventDefault();
-          if (!trimmed) return;
-          onSave(trimmed);
-          onClose();
+          handleSubmit();
         }}
         className="flex w-full max-w-[420px] flex-col gap-5 rounded-2xl bg-[var(--surface)] p-6 shadow-[var(--shadow-card-hover)]"
       >
@@ -80,7 +93,7 @@ export default function NewFolderModal({
           </button>
           <button
             type="submit"
-            disabled={!trimmed}
+            disabled={!trimmed || saving}
             className="btn-primary flex-1 rounded-xl bg-[var(--accent)] px-5 py-3.5 text-[17px] font-bold text-white disabled:cursor-not-allowed disabled:bg-[var(--disabled)] disabled:text-[var(--text-sub)]"
           >
             저장

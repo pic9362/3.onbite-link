@@ -1,28 +1,7 @@
-1. Add MCP server
-   Add the MCP server to your project config using the command line.
-   Code:
-   File: Code
+폴더 추가 기능을 구현해
 
-```
-claude mcp add --scope project --transport http supabase "https://mcp.supabase.com/mcp?project_ref=mqtketqcaaikyrgnaspx&features=docs%2Cdatabase%2Cdebugging%2Cstorage"
-```
-
-2. Authenticate
-   After configuring the MCP server, you need to authenticate. Run this in a regular terminal, not an IDE extension.
-   Details:
-   Select the supabase server, then Authenticate to begin the flow.
-   Code:
-   File: Code
-
-```
-claude /mcp
-```
-
-3. Install Agent Skills (optional)
-   Agent Skills give AI coding tools ready-made instructions, scripts, and resources for working with Supabase more accurately and efficiently.
-   Code:
-   File: Code
-
-```
-npx skills add supabase/agent-skills
-```
+- 사용자가 추가한 폴더를 folders 테이블에 추가해
+- 폴더 추가 버튼의 중복 클릭을 막아서, 여러 개의 폴더가 동시에 추가되지 않도록 해줘
+- 좌측 사이드바에 folders 테이블에 보관된 폴더들을 불러와서 순서대로 나열해줘
+- 이 외의 시키지 않은 기능까지는 굳이 구현하지마
+- MCP를 활용해서 테이블 구조를 먼저 확인하고 작업을 진행해줘
