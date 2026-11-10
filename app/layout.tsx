@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import type { ReactNode } from "react";
 import "./globals.css";
 import { FoldersProvider } from "@/components/folder/FoldersProvider";
 import { LinksProvider } from "@/components/link/LinksProvider";
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
   description: "북마크 서비스",
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+async function DataProviders({ children }: { children: ReactNode }) {
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("folder")
@@ -38,11 +40,23 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   }));
 
   return (
+    <FoldersProvider initialFolders={folders}>
+      <LinksProvider initialLinks={links}>{children}</LinksProvider>
+    </FoldersProvider>
+  );
+}
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
     <html lang="ko" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <FoldersProvider initialFolders={folders}>
-          <LinksProvider initialLinks={links}>{children}</LinksProvider>
-        </FoldersProvider>
+        <Suspense
+          fallback={
+            <p className="p-6 text-[var(--text-sub)]">불러오는 중...</p>
+          }
+        >
+          <DataProviders>{children}</DataProviders>
+        </Suspense>
       </body>
     </html>
   );
