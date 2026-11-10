@@ -21,9 +21,13 @@ export default function FolderList({ folders, activeId }: Props) {
   const close = useCallback(() => setTarget(null), []);
   const closeEdit = useCallback(() => setEditTarget(null), []);
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!target) return;
-    deleteFolder(target.id);
+    try {
+      await deleteFolder(target.id);
+    } catch {
+      return;
+    }
     if (activeId === target.id) router.push("/");
     setTarget(null);
   };
