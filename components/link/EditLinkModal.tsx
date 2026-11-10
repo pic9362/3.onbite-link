@@ -8,7 +8,9 @@ type Props = {
   link: LinkItem;
   folders: Folder[];
   onClose: () => void;
-  onSave: (patch: Pick<LinkItem, "folderId" | "title" | "description">) => void;
+  onSave: (
+    patch: Pick<LinkItem, "folderId" | "title" | "description">,
+  ) => void | Promise<void>;
 };
 
 export default function EditLinkModal({
@@ -40,15 +42,19 @@ export default function EditLinkModal({
         aria-modal="true"
         aria-labelledby="edit-link-title"
         onClick={(e) => e.stopPropagation()}
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           if (!trimmedTitle || !folderId) return;
-          onSave({
-            folderId,
-            title: trimmedTitle,
-            description: description.trim(),
-          });
-          onClose();
+          try {
+            await onSave({
+              folderId,
+              title: trimmedTitle,
+              description: description.trim(),
+            });
+            onClose();
+          } catch {
+            // 저장 실패 시 모달을 열어 둔 채 다시 시도할 수 있게 함
+          }
         }}
         className="flex w-full max-w-[480px] flex-col gap-5 rounded-2xl bg-[var(--surface)] p-6 shadow-[var(--shadow-card-hover)]"
       >

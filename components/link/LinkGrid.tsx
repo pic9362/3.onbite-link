@@ -47,8 +47,12 @@ export default function LinkGrid({ links, folders }: Props) {
           title="링크를 삭제할까요?"
           message={`'${target.title}' 링크가 삭제됩니다. 이 작업은 되돌릴 수 없어요.`}
           onClose={close}
-          onConfirm={() => {
-            deleteLink(target.id);
+          onConfirm={async () => {
+            try {
+              await deleteLink(target.id);
+            } catch {
+              return;
+            }
             setTarget(null);
           }}
         />

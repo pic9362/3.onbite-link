@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { FoldersProvider } from "@/components/folder/FoldersProvider";
 import { LinksProvider } from "@/components/link/LinksProvider";
-import { links } from "@/lib/mock-data";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import type { Folder } from "@/lib/types";
+import type { Folder, LinkItem } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "한입 링크",
@@ -22,6 +21,20 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     id: String(f.id),
     name: f.name,
     count: 0,
+  }));
+
+  const { data: linkRows } = await supabase
+    .from("link")
+    .select("id, url, title, description, thumbnail_url, folder_id, created_at")
+    .order("created_at", { ascending: false });
+  const links: LinkItem[] = (linkRows ?? []).map((l) => ({
+    id: String(l.id),
+    url: l.url,
+    title: l.title ?? l.url,
+    description: l.description ?? "",
+    thumbnail: l.thumbnail_url ?? undefined,
+    folderId: l.folder_id === null ? "" : String(l.folder_id),
+    createdAt: l.created_at.slice(0, 10),
   }));
 
   return (
