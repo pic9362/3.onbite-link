@@ -59,6 +59,7 @@ export default function LoginForm() {
           },
         ]}
         submitLabel="로그인"
+        extraLink={{ label: "비밀번호를 잊으셨나요?", href: "/forgot-password" }}
         footerText="계정이 없으신가요?"
         footerLinkLabel="회원가입"
         footerHref="/signup"

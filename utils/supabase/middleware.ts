@@ -32,7 +32,10 @@ export const createClient = async (request: NextRequest) => {
   // 인덱스, 폴더별, 새 링크 페이지는 로그인한 사용자만 접근 가능
   const { pathname } = request.nextUrl;
   const isProtected =
-    pathname === "/" || pathname === "/new" || pathname.startsWith("/folder/");
+    pathname === "/" ||
+    pathname === "/new" ||
+    pathname === "/reset-password" ||
+    pathname.startsWith("/folder/");
 
   if (!user && isProtected) {
     const redirectResponse = NextResponse.redirect(new URL("/login", request.url));

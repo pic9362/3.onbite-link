@@ -14,9 +14,10 @@ type Field = {
 type Props = {
   fields: Field[];
   submitLabel: string;
-  footerText: string;
-  footerLinkLabel: string;
-  footerHref: string;
+  footerText?: string;
+  footerLinkLabel?: string;
+  footerHref?: string;
+  extraLink?: { label: string; href: string };
   onSubmit?: (values: Record<string, string>) => void | Promise<void>;
 };
 
@@ -27,6 +28,7 @@ export default function AuthForm({
   footerText,
   footerLinkLabel,
   footerHref,
+  extraLink,
   onSubmit,
 }: Props) {
   const [values, setValues] = useState<Record<string, string>>({});
@@ -72,15 +74,25 @@ export default function AuthForm({
       >
         {submitLabel}
       </button>
-      <p className="text-center text-sm text-[var(--text-sub)]">
-        {footerText}{" "}
+      {extraLink && (
         <Link
-          href={footerHref}
-          className="logo-hover font-bold text-[var(--accent)]"
+          href={extraLink.href}
+          className="logo-hover -mb-2 text-center text-sm text-[var(--text-sub)]"
         >
-          {footerLinkLabel}
+          {extraLink.label}
         </Link>
-      </p>
+      )}
+      {footerHref && footerLinkLabel && (
+        <p className="text-center text-sm text-[var(--text-sub)]">
+          {footerText}{" "}
+          <Link
+            href={footerHref}
+            className="logo-hover font-bold text-[var(--accent)]"
+          >
+            {footerLinkLabel}
+          </Link>
+        </p>
+      )}
     </form>
   );
 }
