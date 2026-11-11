@@ -17,9 +17,23 @@ export const metadata: Metadata = {
 async function DataProviders({ children }: { children: ReactNode }) {
   await connection();
   const supabase = createClient(await cookies());
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const userId = user?.id;
+
+  if (!userId) {
+    return (
+      <FoldersProvider key="anonymous" initialFolders={[]}>
+        <LinksProvider initialLinks={[]}>{children}</LinksProvider>
+      </FoldersProvider>
+    );
+  }
+
   const { data } = await supabase
     .from("folder")
     .select("id, name")
+    .eq("user_id", userId)
     .order("id", { ascending: true });
   const folders: Folder[] = (data ?? []).map((f) => ({
     id: String(f.id),
@@ -30,6 +44,7 @@ async function DataProviders({ children }: { children: ReactNode }) {
   const { data: linkRows } = await supabase
     .from("link")
     .select("id, url, title, description, thumbnail_url, folder_id, created_at")
+    .eq("user_id", userId)
     .order("created_at", { ascending: false });
   const links: LinkItem[] = (linkRows ?? []).map((l) => ({
     id: String(l.id),
@@ -42,7 +57,7 @@ async function DataProviders({ children }: { children: ReactNode }) {
   }));
 
   return (
-    <FoldersProvider initialFolders={folders}>
+    <FoldersProvider key={userId} initialFolders={folders}>
       <LinksProvider initialLinks={links}>{children}</LinksProvider>
     </FoldersProvider>
   );
