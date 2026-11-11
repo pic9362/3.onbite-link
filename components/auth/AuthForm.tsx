@@ -20,7 +20,7 @@ type Props = {
   onSubmit?: (values: Record<string, string>) => void | Promise<void>;
 };
 
-// 공용 인증 폼: onSubmit이 없으면 제출해도 아무 동작도 하지 않음 (로그인은 미구현)
+// 공용 인증 폼: 모든 필드가 채워져야 제출 가능, 실제 처리는 onSubmit에 위임
 export default function AuthForm({
   fields,
   submitLabel,
