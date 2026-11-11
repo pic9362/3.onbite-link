@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import type { ReactNode } from "react";
 
 type Field = {
   id: string;
@@ -17,6 +18,7 @@ type Props = {
   footerText?: string;
   footerLinkLabel?: string;
   footerHref?: string;
+  belowSubmit?: ReactNode;
   extraLink?: { label: string; href: string };
   onSubmit?: (values: Record<string, string>) => void | Promise<void>;
 };
@@ -28,6 +30,7 @@ export default function AuthForm({
   footerText,
   footerLinkLabel,
   footerHref,
+  belowSubmit,
   extraLink,
   onSubmit,
 }: Props) {
@@ -74,6 +77,7 @@ export default function AuthForm({
       >
         {submitLabel}
       </button>
+      {belowSubmit}
       {extraLink && (
         <Link
           href={extraLink.href}

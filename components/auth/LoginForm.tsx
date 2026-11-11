@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import AuthForm from "./AuthForm";
+import KakaoLoginButton from "./KakaoLoginButton";
 import Toast from "./Toast";
 
 function toKoreanMessage(message: string, code?: string): string {
@@ -59,6 +60,7 @@ export default function LoginForm() {
           },
         ]}
         submitLabel="로그인"
+        belowSubmit={<KakaoLoginButton onError={setToast} />}
         extraLink={{ label: "비밀번호를 잊으셨나요?", href: "/forgot-password" }}
         footerText="계정이 없으신가요?"
         footerLinkLabel="회원가입"
