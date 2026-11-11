@@ -24,8 +24,22 @@ export const createClient = async (request: NextRequest) => {
     },
   });
 
-  // 세션 토큰 갱신 트리거
-  await supabase.auth.getUser();
+  // 세션 토큰 갱신 + 로그인 여부 확인
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // 인덱스, 폴더별, 새 링크 페이지는 로그인한 사용자만 접근 가능
+  const { pathname } = request.nextUrl;
+  const isProtected =
+    pathname === "/" || pathname === "/new" || pathname.startsWith("/folder/");
+
+  if (!user && isProtected) {
+    const redirectResponse = NextResponse.redirect(new URL("/login", request.url));
+    // 갱신된 세션 쿠키가 있다면 유지
+    supabaseResponse.cookies.getAll().forEach((c) => redirectResponse.cookies.set(c));
+    return redirectResponse;
+  }
 
   return supabaseResponse;
 };

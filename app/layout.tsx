@@ -6,6 +6,7 @@ import { FoldersProvider } from "@/components/folder/FoldersProvider";
 import { LinksProvider } from "@/components/link/LinksProvider";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import type { Folder, LinkItem } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 async function DataProviders({ children }: { children: ReactNode }) {
+  await connection();
   const supabase = createClient(await cookies());
   const { data } = await supabase
     .from("folder")
