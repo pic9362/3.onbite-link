@@ -2,6 +2,7 @@
 
 import SidebarItem from "./SidebarItem";
 import FolderList from "./FolderList";
+import LogoutButton from "./LogoutButton";
 import { useLinks } from "../link/LinksProvider";
 import { useFolders } from "../folder/FoldersProvider";
 
@@ -27,6 +28,7 @@ export default function Sidebar({ activeId = "all" }: Props) {
         active={activeId === "all"}
       />
       <FolderList folders={foldersWithCount}activeId={activeId} />
+      <LogoutButton />
     </aside>
   );
 }
