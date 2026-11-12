@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SidebarItem from "./SidebarItem";
 import FolderList from "./FolderList";
 import LogoutButton from "./LogoutButton";
@@ -29,6 +30,12 @@ export default function Sidebar({ activeId = "all" }: Props) {
       />
       <FolderList folders={foldersWithCount}activeId={activeId} />
       <LogoutButton />
+      <Link
+        href="/privacy"
+        className="px-3.5 text-xs text-[var(--text-sub)] hover:underline"
+      >
+        개인정보 처리방침
+      </Link>
     </aside>
   );
 }

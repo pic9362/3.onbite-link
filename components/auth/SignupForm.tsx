@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
@@ -78,6 +79,15 @@ export default function SignupForm() {
           },
         ]}
         submitLabel="회원가입"
+        belowSubmit={
+          <p className="text-center text-xs text-[var(--text-sub)]">
+            가입 시{" "}
+            <Link href="/privacy" className="logo-hover underline">
+              개인정보 처리방침
+            </Link>
+            을 확인한 것으로 간주됩니다.
+          </p>
+        }
         footerText="이미 계정이 있으신가요?"
         footerLinkLabel="로그인"
         footerHref="/login"
