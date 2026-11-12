@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import AppShell from "@/components/layout/AppShell";
 import NewLinkForm from "@/components/new-link/NewLinkForm";
 
-export const metadata = { title: "새 링크 | 한입 링크" };
+export const metadata: Metadata = {
+  title: "새 링크",
+  description: "새로운 링크를 저장하세요.",
+  openGraph: { title: "새 링크 | 한입 링크" },
+};
 
 export default function NewLinkPage() {
   return (

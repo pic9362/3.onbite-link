@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import FolderView from "@/components/folder/FolderView";
+
+export const metadata: Metadata = {
+  title: "폴더",
+  description: "폴더에 저장된 링크를 확인하세요.",
+  openGraph: { title: "폴더 | 한입 링크" },
+};
 
 export default function FolderPage({ params }: PageProps<"/folder/[id]">) {
   return (
